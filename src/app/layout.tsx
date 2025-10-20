@@ -4,13 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Drone Environnement – Orthophoto, thermique, inspection",
   description:
-    "Pilote de drone spécialisé : orthophotographie & topographie, détection thermique d’espèces, inspection d’ouvrages (13 & 84).",
-  robots: { index: true, follow: true },
-  openGraph: {
-    title: "Drone Environnement – Expertises techniques",
-    description:
-      "Orthophotographie & topographie · Détection thermique d’espèces · Inspection d’ouvrages",
-  },
+    "Pilote de drone spécialisé : orthophotographie & topographie, détection thermique d’espèces, inspection d’ouvrages (13 & 84)."
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
