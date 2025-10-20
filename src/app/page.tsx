@@ -62,7 +62,7 @@ export default function Page() {
             ["Brief & cadre", "Objectifs, périmètre, cadre réglementaire, zone, calendrier."],
             ["Acquisition", "Plan de vol, sécurité, captation photo/vidéo/thermique adaptée."],
             ["Traitements", "Photogrammétrie, géoréférencement, analyses & contrôles qualité."],
-            ["Livrables", "Orthos, MNT/DSM, rapports PDF, exports SIG, vidéo/galerie web."],
+            ["Livrables", "Orthos, MNT/DSM, rapports PDF, exports SIG, vidéo/galerie web."]
           ].map(([t, d], i) => (
             <li className="card p step" key={t}>
               <div className="step__num">{i + 1}</div>
@@ -84,9 +84,7 @@ export default function Page() {
               <div className="project__media" />
               <div className="p">
                 <h3 className="h4">{t}</h3>
-                <p className="muted small">
-                  Remplace par ton image et un court descriptif (objectif, livrables, bénéfices).
-                </p>
+                <p className="muted small">Remplace par ton image et un court descriptif.</p>
               </div>
             </article>
           ))}
@@ -107,32 +105,14 @@ export default function Page() {
       <section id="contact" className="container section">
         <p className="kicker">Contact</p>
         <h2 className="h2">Devis & prise de contact</h2>
-        <form
-          className="card p form"
-          method="POST"
-          action="https://formsubmit.co/TON_EMAIL" 
-        >
+        <form className="card p form" method="POST" action="https://formsubmit.co/TON_EMAIL">
           {/* Remplace TON_EMAIL par ton email (ex: contact@ton-domaine.fr) */}
           <input type="hidden" name="_next" value="/merci" />
           <input type="hidden" name="_captcha" value="false" />
-
-          <div className="field">
-            <label>Nom</label>
-            <input name="nom" required />
-          </div>
-          <div className="field">
-            <label>Email</label>
-            <input type="email" name="email" required />
-          </div>
-          <div className="field">
-            <label>Téléphone</label>
-            <input name="telephone" />
-          </div>
-          <div className="field">
-            <label>Projet</label>
-            <textarea name="message" rows={5} placeholder="Décrivez votre besoin…" required />
-          </div>
-
+          <div className="field"><label>Nom</label><input name="nom" required /></div>
+          <div className="field"><label>Email</label><input type="email" name="email" required /></div>
+          <div className="field"><label>Téléphone</label><input name="telephone" /></div>
+          <div className="field"><label>Projet</label><textarea name="message" rows={5} required /></div>
           <button className="btn btn-primary" type="submit">Envoyer</button>
         </form>
       </section>
