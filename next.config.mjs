@@ -1,13 +1,6 @@
-```js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-// Next 15 : l'option a été déplacée
-typedRoutes: true,
+  typedRoutes: true, // Next.js 15 syntaxe correcte
 };
 
-
 export default nextConfig;
-```
-
-
----
