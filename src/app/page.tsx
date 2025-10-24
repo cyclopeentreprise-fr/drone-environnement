@@ -2,47 +2,34 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, PhoneCall, Mail, MapPin, CheckCircle2, Play } from "lucide-react";
-
-/**
- * Clone structurel de la page Wix, version DARK THEME.
- * - Fond global NOIR (site entier)
- * - Vidéo HERO plein écran qui démarre immédiatement (autoplay, muted, loop)
- * - Sections "exemples de prestations" en FOND BLANC pour créer le contraste demandé
- * - Zéro dépendance UI (HTML + Tailwind + lucide-react)
- *
- * 📂 Médias à placer (via GitHub) dans /public/cyclope/
- * - hero.mp4 (vidéo drone 10–20 s, H.264, 1920×1080) — utilisé au HERO et dans l'overlay d'intro
- * - hero.jpg (poster de fallback)
- * - logo.png (logo entête)
- * - optique.jpg, thermique.jpg, ortho.jpg (cartes services)
- * - sous-ouvrage-1.jpg, sous-ouvrage-2.jpg (galerie sous ouvrage)
- * - topo.jpg (topographie)
- * - france-zones.png (carte France avec zones)
- * - logo-naturalia.png, logo-dept13.png, logo-dept84.png, logo-dept05.png (logos références)
- */
 
 export default function Page() {
   return (
     <main className="min-h-screen bg-black text-white">
-      <IntroVideoOnce />
       <TopBar />
       <Hero />
       <SectionMissionDrone />
       <SectionPrestations />
-      {/* EXEMPLES de prestations en FOND BLANC */}
+
+      {/* BLOCS D'EXEMPLES EN FOND BLANC */}
       <SectionServicesTech />
+      <SectionAvantApres />
       <SectionExampleFalaise />
       <SectionSousOuvrage />
       <SectionTopoGrandeEchelle />
-      {/* Retour au fond noir */}
+
+      {/* RETOUR NOIR */}
       <SectionIngenieurEcologue />
-      <SectionAutresPrestations />
+
+      {/* SECTIONS EN BLANC */}
       <SectionZonesActivite />
       <SectionPourquoiCyclope />
       <SectionExperiences />
+
+      {/* FIN EN NOIR */}
       <SectionRAndD />
       <SectionContact />
       <Footer />
@@ -51,7 +38,7 @@ export default function Page() {
 }
 
 function Container({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <div className={`mx-auto max-w-6xl px-4 sm:px-6 ${className}`}>{children}</div>;
+  return <div className={`mx-auto max-w-6xl px-4 sm:px-6 text-center ${className}`}>{children}</div>;
 }
 
 function TopBar() {
@@ -60,7 +47,7 @@ function TopBar() {
       <Container className="flex items-center justify-between py-3">
         <div className="flex items-center gap-3">
           <Image src="/cyclope/logo.png" alt="CYCLOPE" width={40} height={40} />
-          <div className="leading-tight">
+          <div className="leading-tight text-left">
             <p className="font-semibold">CYCLOPE</p>
             <p className="text-xs text-white/60">Pilote de drone · Ingénieur écologue</p>
           </div>
@@ -77,17 +64,13 @@ function TopBar() {
   );
 }
 
-function Badge({ children }: { children: React.ReactNode }) {
-  return <span className="inline-flex items-center rounded-full bg-white text-black px-3 py-1 text-xs">{children}</span>;
-}
-
 function Hero() {
   return (
     <section className="relative overflow-hidden">
-      {/* Vidéo de fond plein écran */}
+      {/* Vidéo intégrée directement */}
       <div className="absolute inset-0 -z-10">
         <video
-          className="w-full h-[70vh] md:h-[80vh] object-cover"
+          className="w-full h-[80vh] object-cover"
           autoPlay
           muted
           loop
@@ -98,12 +81,13 @@ function Hero() {
         </video>
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
       </div>
-      <Container className="py-16 md:py-24">
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="max-w-3xl">
-          <Badge>Le drone au service de l'expertise écologique</Badge>
-          <h1 className="mt-4 text-4xl md:text-6xl font-bold leading-tight">Technologie aérienne & méthode écologue<br className="hidden md:block" /> au service de l'étude d'impact</h1>
-          <p className="mt-4 text-lg text-white/80">Captation, analyse et restitution de données fiables pour vos études : thermographie faune, orthophotographie, inspections, topographie et intégration SIG.</p>
-          <div className="mt-6 flex gap-3">
+      <Container className="py-20 md:py-28">
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+          <h1 className="mt-6 text-6xl md:text-7xl font-extrabold tracking-tight">LE DRONE</h1>
+          <p className="mt-3 text-2xl md:text-3xl text-white/80">
+            au service de l'étude environnementale
+          </p>
+          <div className="mt-6 flex justify-center gap-3">
             <a href="#prestations" className="inline-flex items-center gap-2 bg-white text-black rounded-xl px-5 py-3 hover:bg-white/90">Voir les prestations</a>
             <a href="#contact" className="inline-flex items-center gap-2 border border-white/40 rounded-xl px-5 py-3 hover:bg-white/10"><Play className="h-4 w-4" />Nous contacter</a>
           </div>
@@ -113,48 +97,8 @@ function Hero() {
   );
 }
 
-/**
- * Overlay vidéo qui s'ouvre AUTOMATIQUEMENT à la première visite (comme sur Wix),
- * puis ne s'affiche plus grâce à localStorage (clé: introVideoSeen=true).
- * Autoplay fonctionne car la vidéo est MUTED (exigence navigateurs).
- */
-function IntroVideoOnce() {
-  const [open, setOpen] = useState(false);
-  useEffect(() => {
-    try {
-      const seen = localStorage.getItem("introVideoSeen");
-      if (!seen) {
-        setOpen(true);
-        localStorage.setItem("introVideoSeen", "true");
-      }
-    } catch (e) {
-      setOpen(true); // si localStorage indispo, on ouvre quand même
-    }
-  }, []);
-
-  if (!open) return null;
-  return (
-    <div className="fixed inset-0 z-[60] bg-black/80 flex items-center justify-center p-4" onClick={() => setOpen(false)}>
-      <div className="w-full max-w-4xl" onClick={(e) => e.stopPropagation()}>
-        <div className="relative w-full pt-[56.25%] overflow-hidden rounded-2xl border border-white/20 shadow-xl">
-          <video className="absolute inset-0 w-full h-full object-cover" autoPlay muted playsInline controls>
-            <source src="/cyclope/hero.mp4" type="video/mp4" />
-          </video>
-        </div>
-        <button className="mt-3 w-full rounded-xl bg-white text-black px-4 py-2" onClick={() => setOpen(false)}>Fermer</button>
-      </div>
-    </div>
-  );
-}
-
 function H2({ children, id }: { children: React.ReactNode; id?: string }) {
-  return (
-    <h2 id={id} className="text-3xl md:text-4xl font-bold">{children}</h2>
-  );
-}
-
-function Pill({ children }: { children: React.ReactNode }) {
-  return <span className="inline-flex items-center rounded-full bg-white/10 text-white px-3 py-1 text-xs">{children}</span>;
+  return <h2 id={id} className="text-3xl md:text-4xl font-bold">{children}</h2>;
 }
 
 function SectionMissionDrone() {
@@ -162,7 +106,10 @@ function SectionMissionDrone() {
     <section className="py-14">
       <Container>
         <H2>La mission drone</H2>
-        <p className="mt-3 text-white/80">Optimiser l'étude d'impact de la concertation au rendu final : cadrage des besoins, protocole adapté, acquisitions maîtrisées et livrables exploitables.</p>
+        <p className="mt-3 text-white/80">
+          Optimiser l'étude d'impact de la concertation au rendu final : cadrage des besoins,
+          protocole adapté, acquisitions maîtrisées et livrables exploitables.
+        </p>
       </Container>
     </section>
   );
