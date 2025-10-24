@@ -58,7 +58,9 @@ function TopBar() {
           <a href="#pourquoi" className="hover:text-white/80">Pourquoi nous</a>
           <a href="#contact" className="hover:text-white/80">Contact</a>
         </nav>
-        <a href="#contact" className="inline-flex items-center gap-2 bg-white text-black rounded-xl px-4 py-2 text-sm hover:bg-white/90">Devis <ArrowRight className="h-4 w-4" /></a>
+        <a href="#contact" className="inline-flex items-center gap-2 bg-white text-black rounded-xl px-4 py-2 text-sm hover:bg-white/90">
+          Devis <ArrowRight className="h-4 w-4" />
+        </a>
       </Container>
     </header>
   );
@@ -88,8 +90,12 @@ function Hero() {
             au service de l'étude environnementale
           </p>
           <div className="mt-6 flex justify-center gap-3">
-            <a href="#prestations" className="inline-flex items-center gap-2 bg-white text-black rounded-xl px-5 py-3 hover:bg-white/90">Voir les prestations</a>
-            <a href="#contact" className="inline-flex items-center gap-2 border border-white/40 rounded-xl px-5 py-3 hover:bg-white/10"><Play className="h-4 w-4" />Nous contacter</a>
+            <a href="#prestations" className="inline-flex items-center gap-2 bg-white text-black rounded-xl px-5 py-3 hover:bg-white/90">
+              Voir les prestations
+            </a>
+            <a href="#contact" className="inline-flex items-center gap-2 border border-white/40 rounded-xl px-5 py-3 hover:bg-white/10">
+              <Play className="h-4 w-4" /> Nous contacter
+            </a>
           </div>
         </motion.div>
       </Container>
@@ -156,7 +162,9 @@ function SectionServicesTech() {
         <div className="mt-8 grid md:grid-cols-3 gap-6">
           {cards.map((c, i) => (
             <div key={i} className="rounded-2xl overflow-hidden border shadow-sm bg-white">
-              <div className="relative h-44"><Image src={c.img} alt={c.title} fill className="object-cover" /></div>
+              <div className="relative h-44">
+                <Image src={c.img} alt={c.title} fill className="object-cover" />
+              </div>
               <div className="p-5">
                 <span className="inline-flex items-center rounded-full bg-gray-100 text-gray-900 px-3 py-1 text-xs">{c.subtitle}</span>
                 <h3 className="mt-2 text-xl font-semibold">{c.title}</h3>
@@ -186,7 +194,7 @@ function SectionAvantApres() {
               <Image src="/cyclope/apres.jpg" alt="Après" width={1600} height={900} className="w-full h-auto block" />
             </div>
             <div className="absolute inset-y-0" style={{ left: `${pos}%` }}>
-              <div className="w-0.5 h-full bg.black/60" />
+              <div className="w-0.5 h-full bg-black/60" />
             </div>
           </div>
           <input
@@ -261,4 +269,115 @@ function SectionIngenieurEcologue() {
 
 function SectionZonesActivite() {
   return (
-    <section id="zones" className="py-14 bg-white text-gray-9
+    <section id="zones" className="py-14 bg-white text-gray-900">
+      <Container>
+        <H2>Zone d'activité</H2>
+        <p className="mt-3 text-gray-700">Zone principale 13·84 incluse dans les forfaits. Zone étendue France entière sur devis.</p>
+        <div className="mt-6 relative h-64 rounded-2xl overflow-hidden border bg-white">
+          <Image src="/cyclope/france-zones.png" alt="France zones" fill className="object-contain" />
+        </div>
+      </Container>
+    </section>
+  );
+}
+
+function SectionPourquoiCyclope() {
+  return (
+    <section id="pourquoi" className="py-14 bg-white text-gray-900">
+      <Container>
+        <H2>Pourquoi CYCLOPE</H2>
+        <p className="mt-3 text-gray-700">Méthodologie optimisée pour le bureau d'étude : interface drone ↔ besoins projet, gains de temps et de qualité.</p>
+      </Container>
+    </section>
+  );
+}
+
+function SectionExperiences() {
+  const logos = [
+    { src: "/cyclope/logo-naturalia.png", name: "Naturalia Environnement" },
+    { src: "/cyclope/logo-dept13.png", name: "Département 13" },
+    { src: "/cyclope/logo-dept84.png", name: "Département 84" },
+    { src: "/cyclope/logo-dept05.png", name: "Département 05" },
+  ];
+  return (
+    <section className="py-14 bg-white text-gray-900">
+      <Container>
+        <H2>Nos expériences</H2>
+        <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-6 place-items-center opacity-90">
+          {logos.map((l, i) => (
+            <Image key={i} src={l.src} alt={l.name} width={160} height={80} className="object-contain" />
+          ))}
+        </div>
+      </Container>
+    </section>
+  );
+}
+
+function SectionRAndD() {
+  return (
+    <section className="py-14">
+      <Container>
+        <H2>En développement R&D</H2>
+        <div className="mt-3 grid md:grid-cols-2 gap-6">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <h3 className="text-lg font-semibold">Détection automatisée d'espèces (colorimétrie)</h3>
+            <p className="mt-2 text-sm text-white/80">Méthode par classes de couleurs pour repérer des espèces végétales.</p>
+          </div>
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <h3 className="text-lg font-semibold">Détection automatisée d'espèces (pixélisation)</h3>
+            <p className="mt-2 text-sm text-white/80">Approche par segmentation/pixels pour cartographier la présence.</p>
+          </div>
+        </div>
+      </Container>
+    </section>
+  );
+}
+
+function SectionContact() {
+  return (
+    <section id="contact" className="py-14 bg-white text-gray-900">
+      <Container>
+        <div className="grid md:grid-cols-2 gap-8 items-start">
+          <div>
+            <H2>Contact</H2>
+            <ul className="mt-4 space-y-2 text-sm">
+              <li className="flex items-center justify-center gap-2"><PhoneCall className="h-4 w-4" /> (+33) 06 65 54 11 07</li>
+              <li className="flex items-center justify-center gap-2"><Mail className="h-4 w-4" /> cyclope.entreprise@gmail.com</li>
+              <li className="flex items-center justify-center gap-2"><MapPin className="h-4 w-4" /> 3 Rue de Belle Aureille — 05000 GAP</li>
+              <li className="flex items-center justify-center gap-2"><CheckCircle2 className="h-4 w-4" /> DGAC — Pilote drone pro</li>
+            </ul>
+          </div>
+          <form action="https://formsubmit.co/cyclope.entreprise@gmail.com" method="POST" className="bg-gray-50 text-gray-900 p-6 rounded-2xl border shadow-sm">
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_next" value="/merci" />
+            <div className="grid grid-cols-1 gap-4">
+              <input name="nom" placeholder="Nom / Société" required className="w-full rounded-xl border px-3 py-2" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <input type="email" name="email" placeholder="Email" required className="w-full rounded-xl border px-3 py-2" />
+                <input type="tel" name="telephone" placeholder="Téléphone" className="w-full rounded-xl border px-3 py-2" />
+              </div>
+              <textarea name="message" placeholder="Votre besoin (thermique, orthophoto, inspection, topographie…)" className="min-h-[120px] w-full rounded-xl border px-3 py-2" />
+              <button type="submit" className="w-full inline-flex justify-center items-center bg-black text-white rounded-xl px-4 py-3">
+                Envoyer
+              </button>
+            </div>
+          </form>
+        </div>
+      </Container>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="py-10 border-t border-white/10 bg-black">
+      <Container className="flex flex-col md:flex-row items-center justify-between gap-4">
+        <p className="text-sm text-white/60">© {new Date().getFullYear()} CYCLOPE — Tous droits réservés.</p>
+        <div className="flex items-center gap-4 text-sm">
+          <Link href="#">Mentions légales</Link>
+          <Link href="#">Confidentialité</Link>
+        </div>
+      </Container>
+    </footer>
+  );
+}
