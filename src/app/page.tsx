@@ -2,20 +2,13 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { PhoneCall, Mail, ShieldCheck, ArrowRight, Play, Star, CheckCircle2, MapPin, Send, Leaf, Camera, ThermometerSun, Building2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
-// 👉 Placez vos médias dans /public :
-// - /public/hero.mp4 (vidéo courte 10–20s, 1920x1080, H.264)
-// - /public/logo-provence-drone-immo.png (ou votre logo environnement)
-// - /public/portfolio/1.jpg ... /public/portfolio/8.jpg (photos projets)
-// - /public/clients/{1..5}.png (logos clients/partenaires)
+// Cette version N'UTILISE PAS shadcn/ui. 
+// Tout est en HTML + Tailwind + quelques icônes lucide-react.
+// Place tes médias dans /public (voir commentaires plus bas).
 
 export default function Page() {
   return (
@@ -53,54 +46,44 @@ function TopBar() {
           </div>
         </div>
         <nav className="hidden md:flex items-center gap-6 text-sm">
-          <Link href="#services" className="hover:text-gray-700">Services</Link>
-          <Link href="#portfolio" className="hover:text-gray-700">Réalisations</Link>
-          <Link href="#process" className="hover:text-gray-700">Méthode</Link>
-          <Link href="#tarifs" className="hover:text-gray-700">Tarifs</Link>
-          <Link href="#contact" className="hover:text-gray-700">Contact</Link>
+          <a href="#services" className="hover:text-gray-700">Services</a>
+          <a href="#portfolio" className="hover:text-gray-700">Réalisations</a>
+          <a href="#process" className="hover:text-gray-700">Méthode</a>
+          <a href="#tarifs" className="hover:text-gray-700">Tarifs</a>
+          <a href="#contact" className="hover:text-gray-700">Contact</a>
         </nav>
         <div className="flex items-center gap-2">
-          <Button asChild variant="outline" className="hidden sm:inline-flex">
-            <Link href="tel:+33600000000"><PhoneCall className="mr-2 h-4 w-4" /> Appeler</Link>
-          </Button>
-          <Button asChild>
-            <Link href="#contact">Devis gratuit <ArrowRight className="ml-2 h-4 w-4" /></Link>
-          </Button>
+          <a href="tel:+33600000000" className="hidden sm:inline-flex items-center gap-2 border rounded-xl px-3 py-2 text-sm hover:bg-gray-50"><PhoneCall className="h-4 w-4" /> Appeler</a>
+          <a href="#contact" className="inline-flex items-center gap-2 bg-gray-900 text-white rounded-xl px-4 py-2 text-sm hover:bg-black">Devis gratuit <ArrowRight className="h-4 w-4" /></a>
         </div>
       </Container>
     </header>
   );
 }
 
+function Badge({ children }: { children: React.ReactNode }) {
+  return <span className="inline-flex items-center rounded-full bg-gray-900 text-white px-3 py-1 text-xs">{children}</span>;
+}
+
 function Hero() {
   return (
     <section className="relative">
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        <video
-          className="w-full h-[60vh] md:h-[70vh] object-cover"
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster="/portfolio/1.jpg"
-        >
+        <video className="w-full h-[60vh] md:h-[70vh] object-cover" autoPlay muted loop playsInline poster="/portfolio/1.jpg">
           <source src="/hero.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-t from-white via-white/20 to-transparent" />
       </div>
       <Container className="pt-16 md:pt-24">
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="max-w-3xl">
-          <Badge className="mb-4">Pilote drone certifié – 13 & 84</Badge>
-          <h1 className="text-4xl md:text-6xl font-bold leading-tight">
+          <Badge>Pilote drone certifié – 13 & 84</Badge>
+          <h1 className="mt-4 text-4xl md:text-6xl font-bold leading-tight">
             Des données aériennes <span className="text-gray-700">fiables</span> pour des décisions <span className="text-gray-700">plus rapides</span>
           </h1>
-          <p className="mt-4 text-lg text-gray-600">
-            Orthophotographies centimétriques, détection thermique d’espèces, inspection d’ouvrages et intégration paysagère. 
-            Nous livrons des résultats exploitables, clairs et actionnables pour vos études et chantiers.
-          </p>
+          <p className="mt-4 text-lg text-gray-600">Orthophotographies centimétriques, détection thermique d’espèces, inspection d’ouvrages et intégration paysagère. Nous livrons des résultats exploitables, clairs et actionnables pour vos études et chantiers.</p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <Button asChild size="lg"><Link href="#contact">Demander un devis</Link></Button>
-            <Button asChild variant="outline" size="lg"><Link href="#portfolio"><Play className="mr-2 h-4 w-4" />Voir nos projets</Link></Button>
+            <a href="#contact" className="inline-flex items-center gap-2 bg-gray-900 text-white rounded-xl px-5 py-3 text-sm md:text-base hover:bg-black">Demander un devis</a>
+            <a href="#portfolio" className="inline-flex items-center gap-2 border rounded-xl px-5 py-3 text-sm md:text-base hover:bg-gray-50"><Play className="h-4 w-4" />Voir nos projets</a>
           </div>
           <ul className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 text-sm text-gray-600">
             <li className="flex items-center gap-2"><ShieldCheck className="h-4 w-4" /> Assuré RC Pro</li>
@@ -126,22 +109,16 @@ function TrustBar() {
   );
 }
 
+function Card({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <div className={`rounded-2xl border shadow-sm ${className}`}>{children}</div>;
+}
+
 function Services() {
   const items = [
-    {
-      icon: <Camera className="h-6 w-6" />, title: "Orthophotographie & Topographie", 
-      text: "Cartes géoréférencées à haute résolution (GSD ≤ 1,5 cm), MNT/MNS, courbes de niveau, cubatures, emprises et métrés. Export SIG (GeoTIFF, DXF)."
-    },
-    {
-      icon: <ThermometerSun className="h-6 w-6" />, title: "Détection thermique d’espèces", 
-      text: "Repérage et comptage nocturnes/aurore des espèces sensibles (zones de nidification, corridors), rapports documentés et géolocalisés."
-    },
-    {
-      icon: <Building2 className="h-6 w-6" />, title: "Inspection d’ouvrages", 
-      text: "Ponts, toitures, panneaux solaires, falaises : photos/vidéos 4K, ortho façades, observations de défauts, livrables clairs pour la maintenance."
-    },
+    { icon: <Camera className="h-6 w-6" />, title: "Orthophotographie & Topographie", text: "Cartes géoréférencées à haute résolution (GSD ≤ 1,5 cm), MNT/MNS, courbes de niveau, cubatures, emprises et métrés. Export SIG (GeoTIFF, DXF)." },
+    { icon: <ThermometerSun className="h-6 w-6" />, title: "Détection thermique d’espèces", text: "Repérage et comptage nocturnes/aurore des espèces sensibles (zones de nidification, corridors), rapports documentés et géolocalisés." },
+    { icon: <Building2 className="h-6 w-6" />, title: "Inspection d’ouvrages", text: "Ponts, toitures, panneaux solaires, falaises : photos/vidéos 4K, ortho façades, observations de défauts, livrables clairs pour la maintenance." },
   ];
-
   return (
     <section id="services" className="py-16 md:py-24">
       <Container>
@@ -151,38 +128,28 @@ function Services() {
         </div>
         <div className="grid md:grid-cols-3 gap-6">
           {items.map((s, idx) => (
-            <Card key={idx} className="rounded-2xl shadow-sm">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-xl">
-                  <span className="p-2 rounded-xl bg-gray-100">{s.icon}</span> {s.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600">{s.text}</p>
-                <ul className="mt-4 text-sm text-gray-600 space-y-1">
-                  {idx===0 && (
-                    <>
-                      <li>• GCP/RTK selon besoin</li>
-                      <li>• Formats: GeoTIFF, DXF, DWG, SHP</li>
-                      <li>• Rapport PDF illustré</li>
-                    </>
-                  )}
-                  {idx===1 && (
-                    <>
-                      <li>• Captations aux heures adaptées</li>
-                      <li>• Cartes de chaleur & exports SIG</li>
-                      <li>• Recommandations d’atténuation</li>
-                    </>
-                  )}
-                  {idx===2 && (
-                    <>
-                      <li>• Détails 48MP & vidéo 4K</li>
-                      <li>• Points d’anomalie géolocalisés</li>
-                      <li>• Priorisation des actions</li>
-                    </>
-                  )}
-                </ul>
-              </CardContent>
+            <Card key={idx} className="p-6">
+              <div className="flex items-center gap-3 text-xl font-semibold">
+                <span className="p-2 rounded-xl bg-gray-100">{s.icon}</span> {s.title}
+              </div>
+              <p className="mt-3 text-gray-600">{s.text}</p>
+              <ul className="mt-4 text-sm text-gray-600 space-y-1">
+                {idx===0 && (<>
+                  <li>• GCP/RTK selon besoin</li>
+                  <li>• Formats: GeoTIFF, DXF, DWG, SHP</li>
+                  <li>• Rapport PDF illustré</li>
+                </>)}
+                {idx===1 && (<>
+                  <li>• Captations aux heures adaptées</li>
+                  <li>• Cartes de chaleur & exports SIG</li>
+                  <li>• Recommandations d’atténuation</li>
+                </>)}
+                {idx===2 && (<>
+                  <li>• Détails 48MP & vidéo 4K</li>
+                  <li>• Points d’anomalie géolocalisés</li>
+                  <li>• Priorisation des actions</li>
+                </>)}
+              </ul>
             </Card>
           ))}
         </div>
@@ -197,8 +164,8 @@ function CTACompact() {
       <Container className="flex flex-col md:flex-row items-center justify-between gap-4">
         <p className="text-lg font-medium">Un besoin urgent ? Obtenez un devis et un délai sous 24h ouvrées.</p>
         <div className="flex gap-3">
-          <Button asChild variant="secondary"><Link href="#contact"><Send className="mr-2 h-4 w-4" /> Demander un devis</Link></Button>
-          <Button asChild variant="outline" className="text-white"><Link href="tel:+33600000000"><PhoneCall className="mr-2 h-4 w-4" /> Appeler</Link></Button>
+          <a href="#contact" className="inline-flex items-center gap-2 bg-white text-gray-900 rounded-xl px-4 py-2 text-sm hover:opacity-90"><Send className="h-4 w-4" /> Demander un devis</a>
+          <a href="tel:+33600000000" className="inline-flex items-center gap-2 border border-white text-white rounded-xl px-4 py-2 text-sm hover:bg-white/10"><PhoneCall className="h-4 w-4" /> Appeler</a>
         </div>
       </Container>
     </section>
@@ -212,26 +179,35 @@ function Portfolio() {
       <Container>
         <div className="mb-10 text-center">
           <h2 className="text-3xl md:text-4xl font-bold">Réalisations</h2>
-          <p className="mt-2 text-gray-600">Un aperçu de nos missions : orthophotos, inspections, détection thermique.</p>
         </div>
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
           {items.map((src, idx) => (
-            <Dialog key={idx}>
-              <DialogTrigger asChild>
-                <button className="group relative overflow-hidden rounded-2xl shadow-sm">
-                  <Image src={src} alt={`Projet ${idx+1}`} width={800} height={600} className="object-cover aspect-[4/3] transition-transform duration-300 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <span className="absolute bottom-2 left-2 text-white text-sm font-medium flex items-center gap-1">Voir <ArrowRight className="h-4 w-4" /></span>
-                </button>
-              </DialogTrigger>
-              <DialogContent className="max-w-4xl p-0 overflow-hidden">
-                <Image src={src} alt={`Projet ${idx+1} grand`} width={1600} height={1200} className="w-full h-auto" />
-              </DialogContent>
-            </Dialog>
+            <LightboxImage key={idx} src={src} alt={`Projet ${idx+1}`} />
           ))}
         </div>
       </Container>
     </section>
+  );
+}
+
+function LightboxImage({ src, alt }: { src: string; alt: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <button onClick={() => setOpen(true)} className="group relative overflow-hidden rounded-2xl shadow-sm">
+        <Image src={src} alt={alt} width={800} height={600} className="object-cover aspect-[4/3] transition-transform duration-300 group-hover:scale-105" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+        <span className="absolute bottom-2 left-2 text-white text-sm font-medium inline-flex items-center gap-1">Voir <ArrowRight className="h-4 w-4" /></span>
+      </button>
+      {open && (
+        <div className="fixed inset-0 z-[60] bg-black/70 flex items-center justify-center p-4" onClick={() => setOpen(false)}>
+          <div className="max-w-5xl w-full" onClick={(e) => e.stopPropagation()}>
+            <Image src={src} alt={`${alt} grand`} width={1600} height={1200} className="w-full h-auto rounded-xl" />
+            <button onClick={() => setOpen(false)} className="mt-3 w-full rounded-xl bg-white text-gray-900 px-4 py-2">Fermer</button>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -251,12 +227,10 @@ function Process() {
         </div>
         <div className="grid md:grid-cols-4 gap-6">
           {steps.map((s, i) => (
-            <Card key={i} className="rounded-2xl">
-              <CardHeader>
-                <Badge variant="secondary" className="w-fit">Étape {i+1}</Badge>
-                <CardTitle className="mt-2">{s.title}</CardTitle>
-              </CardHeader>
-              <CardContent className="text-gray-600">{s.text}</CardContent>
+            <Card key={i} className="p-6">
+              <span className="inline-flex items-center rounded-full bg-gray-100 text-gray-900 px-3 py-1 text-xs">Étape {i+1}</span>
+              <h3 className="mt-3 text-xl font-semibold">{s.title}</h3>
+              <p className="mt-2 text-gray-600">{s.text}</p>
             </Card>
           ))}
         </div>
@@ -277,13 +251,9 @@ function Certifications() {
             <li className="flex items-center gap-2"><ShieldCheck className="h-5 w-5" />Déclarations et évaluations de risques documentées</li>
           </ul>
         </div>
-        <Card className="rounded-2xl">
-          <CardHeader>
-            <CardTitle>Zones d’intervention</CardTitle>
-          </CardHeader>
-          <CardContent className="text-gray-600">
-            Bouches‑du‑Rhône (13) & Vaucluse (84). Déplacements au‑delà sur devis.
-          </CardContent>
+        <Card className="p-6">
+          <h4 className="text-lg font-semibold">Zones d’intervention</h4>
+          <p className="mt-2 text-gray-600">Bouches‑du‑Rhône (13) & Vaucluse (84). Déplacements au‑delà sur devis.</p>
         </Card>
       </Container>
     </section>
@@ -305,14 +275,12 @@ function Testimonials() {
         </div>
         <div className="grid md:grid-cols-3 gap-6">
           {items.map((t, i) => (
-            <Card key={i} className="rounded-2xl h-full">
-              <CardContent className="p-6">
-                <div className="flex gap-1">
-                  {Array.from({ length: t.rating }).map((_, i) => (<Star key={i} className="h-4 w-4" />))}
-                </div>
-                <p className="mt-3 text-gray-700">“{t.text}”</p>
-                <p className="mt-4 text-sm text-gray-500">{t.name}</p>
-              </CardContent>
+            <Card key={i} className="p-6 h-full">
+              <div className="flex gap-1">
+                {Array.from({ length: t.rating }).map((_, i) => (<Star key={i} className="h-4 w-4" />))}
+              </div>
+              <p className="mt-3 text-gray-700">“{t.text}”</p>
+              <p className="mt-4 text-sm text-gray-500">{t.name}</p>
             </Card>
           ))}
         </div>
@@ -330,48 +298,36 @@ function Pricing() {
           <p className="mt-2 text-gray-600">Des offres claires. Facturation au forfait ou sur devis selon la complexité.</p>
         </div>
         <div className="grid md:grid-cols-3 gap-6">
-          <Card className="rounded-2xl">
-            <CardHeader>
-              <CardTitle>Essentiel</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-3xl font-bold">149€ <span className="text-sm text-gray-500">HT</span></p>
-              <ul className="mt-4 text-gray-600 space-y-1 text-sm">
-                <li>• Prise de vues pro</li>
-                <li>• 20 photos retouchées</li>
-                <li>• Livraison 48h</li>
-              </ul>
-              <Button asChild className="mt-4 w-full"><Link href="#contact">Choisir</Link></Button>
-            </CardContent>
+          <Card className="p-6">
+            <h3 className="text-xl font-semibold">Essentiel</h3>
+            <p className="mt-2 text-3xl font-bold">149€ <span className="text-sm text-gray-500">HT</span></p>
+            <ul className="mt-4 text-gray-600 space-y-1 text-sm">
+              <li>• Prise de vues pro</li>
+              <li>• 20 photos retouchées</li>
+              <li>• Livraison 48h</li>
+            </ul>
+            <a href="#contact" className="mt-4 w-full inline-flex justify-center items-center bg-gray-900 text-white rounded-xl px-4 py-2">Choisir</a>
           </Card>
-          <Card className="rounded-2xl border-gray-900 border-2">
-            <CardHeader>
-              <Badge className="w-fit">Le plus demandé</Badge>
-              <CardTitle>Visibilité+</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-3xl font-bold">279€ <span className="text-sm text-gray-500">HT</span></p>
-              <ul className="mt-4 text-gray-600 space-y-1 text-sm">
-                <li>• Photos + vidéo 4K</li>
-                <li>• Montage court (30–60s)</li>
-                <li>• Retouches avancées</li>
-              </ul>
-              <Button asChild className="mt-4 w-full"><Link href="#contact">Choisir</Link></Button>
-            </CardContent>
+          <Card className="p-6 border-2 border-gray-900">
+            <span className="inline-flex items-center rounded-full bg-gray-900 text-white px-3 py-1 text-xs">Le plus demandé</span>
+            <h3 className="mt-2 text-xl font-semibold">Visibilité+</h3>
+            <p className="mt-2 text-3xl font-bold">279€ <span className="text-sm text-gray-500">HT</span></p>
+            <ul className="mt-4 text-gray-600 space-y-1 text-sm">
+              <li>• Photos + vidéo 4K</li>
+              <li>• Montage court (30–60s)</li>
+              <li>• Retouches avancées</li>
+            </ul>
+            <a href="#contact" className="mt-4 w-full inline-flex justify-center items-center bg-gray-900 text-white rounded-xl px-4 py-2">Choisir</a>
           </Card>
-          <Card className="rounded-2xl">
-            <CardHeader>
-              <CardTitle>Premium Dossier</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-3xl font-bold">499€ <span className="text-sm text-gray-500">HT</span></p>
-              <ul className="mt-4 text-gray-600 space-y-1 text-sm">
-                <li>• Orthophoto & exports SIG</li>
-                <li>• Rapport PDF illustré</li>
-                <li>• Réunion de restitution</li>
-              </ul>
-              <Button asChild className="mt-4 w-full"><Link href="#contact">Choisir</Link></Button>
-            </CardContent>
+          <Card className="p-6">
+            <h3 className="text-xl font-semibold">Premium Dossier</h3>
+            <p className="mt-2 text-3xl font-bold">499€ <span className="text-sm text-gray-500">HT</span></p>
+            <ul className="mt-4 text-gray-600 space-y-1 text-sm">
+              <li>• Orthophoto & exports SIG</li>
+              <li>• Rapport PDF illustré</li>
+              <li>• Réunion de restitution</li>
+            </ul>
+            <a href="#contact" className="mt-4 w-full inline-flex justify-center items-center bg-gray-900 text-white rounded-xl px-4 py-2">Choisir</a>
           </Card>
         </div>
       </Container>
@@ -394,11 +350,9 @@ function FAQ() {
         </div>
         <div className="grid md:grid-cols-3 gap-6">
           {items.map((f, i) => (
-            <Card key={i} className="rounded-2xl">
-              <CardHeader>
-                <CardTitle className="text-lg">{f.q}</CardTitle>
-              </CardHeader>
-              <CardContent className="text-gray-600">{f.a}</CardContent>
+            <Card key={i} className="p-6">
+              <h3 className="text-lg font-semibold">{f.q}</h3>
+              <p className="mt-2 text-gray-600">{f.a}</p>
             </Card>
           ))}
         </div>
@@ -421,20 +375,19 @@ function Contact() {
             </ul>
           </div>
           <form action="https://formsubmit.co/contact@provence-drone-immo.fr" method="POST" className="bg-gray-50 p-6 rounded-2xl border shadow-sm">
-            {/* FormSubmit config */}
             <input type="hidden" name="_captcha" value="false" />
             <input type="hidden" name="_subject" value="Nouveau devis – Drone Environnement" />
             <input type="hidden" name="_next" value="/merci" />
 
             <div className="grid grid-cols-1 gap-4">
-              <Input name="nom" placeholder="Nom / Société" required />
+              <input name="nom" placeholder="Nom / Société" required className="w-full rounded-xl border px-3 py-2" />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Input type="email" name="email" placeholder="Email" required />
-                <Input type="tel" name="telephone" placeholder="Téléphone" />
+                <input type="email" name="email" placeholder="Email" required className="w-full rounded-xl border px-3 py-2" />
+                <input type="tel" name="telephone" placeholder="Téléphone" className="w-full rounded-xl border px-3 py-2" />
               </div>
-              <Input name="lieu" placeholder="Lieu d’intervention (commune, département)" />
-              <Textarea name="besoin" placeholder="Décrivez votre besoin (orthophoto, thermique, inspection…)" className="min-h-[120px]" />
-              <Button type="submit" className="w-full">Envoyer la demande</Button>
+              <input name="lieu" placeholder="Lieu d’intervention (commune, département)" className="w-full rounded-xl border px-3 py-2" />
+              <textarea name="besoin" placeholder="Décrivez votre besoin (orthophoto, thermique, inspection…)" className="min-h-[120px] w-full rounded-xl border px-3 py-2" />
+              <button type="submit" className="w-full inline-flex justify-center items-center bg-gray-900 text-white rounded-xl px-4 py-3">Envoyer la demande</button>
             </div>
           </form>
         </div>
