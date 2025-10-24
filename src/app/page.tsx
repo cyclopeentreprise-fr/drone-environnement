@@ -123,7 +123,7 @@ function SectionPrestations() {
   const items = [
     { title: "Orthophotographie", text: "Cartes géoréférencées, MNT/MNS, courbes de niveau, exports SIG." },
     { title: "Thermographie faune", text: "Détection/confirmation d'espèces, zones sensibles, comptages ciblés." },
-    { title: "Inspection d'ouvrages", text: "Falaises, sous‑ouvrages, toitures, solaire : photos/vidéos UHD." },
+    { title: "Inspection d'ouvrages", text: "Falaises, sous-ouvrages, toitures, solaire : photos/vidéos UHD." },
     { title: "Topographie", text: "RTK/GCP, emprises, cubatures, métrés fiables au centimètre." },
   ];
   return (
@@ -143,17 +143,17 @@ function SectionPrestations() {
   );
 }
 
-/** SECTIONS D'EXEMPLES — FOND BLANC **/
 function SectionServicesTech() {
   const cards = [
     { title: "Captation optique", subtitle: "UHD / 5K", img: "/cyclope/optique.jpg", bullets: ["Photos/vidéos UHD", "Angles difficiles accessibles", "Livrables clairs"] },
     { title: "Captation thermique", subtitle: "Détection fine", img: "/cyclope/thermique.jpg", bullets: ["Repérage d'espèces", "Créneaux nocturnes/aurore", "Rapport géolocalisé"] },
-    { title: "Orthophotographie", subtitle: "SIG prêt à l'emploi", img: "/cyclope/ortho.jpg", bullets: ["GeoTIFF / DXF", "Analyse des fonctionnalités", "Suivi multi‑années"] },
+    { title: "Orthophotographie", subtitle: "SIG prêt à l'emploi", img: "/cyclope/ortho.jpg", bullets: ["GeoTIFF / DXF", "Analyse des fonctionnalités", "Suivi multi-années"] },
   ];
   return (
     <section className="py-14 bg-white text-gray-900">
       <Container>
-        <div className="grid md:grid-cols-3 gap-6">
+        <h2 className="text-3xl md:text-4xl font-bold">Exemples de prestations</h2>
+        <div className="mt-8 grid md:grid-cols-3 gap-6">
           {cards.map((c, i) => (
             <div key={i} className="rounded-2xl overflow-hidden border shadow-sm bg-white">
               <div className="relative h-44"><Image src={c.img} alt={c.title} fill className="object-cover" /></div>
@@ -172,12 +172,48 @@ function SectionServicesTech() {
   );
 }
 
+function SectionAvantApres() {
+  const [pos, setPos] = useState(50); // %
+  return (
+    <section className="py-14 bg-white text-gray-900">
+      <Container>
+        <h2 className="text-3xl md:text-4xl font-bold">Orthophoto — Avant / Après</h2>
+        <p className="mt-2 text-gray-700">Montre concrètement l'impact d'un aménagement, d'une phase chantier ou d'une restauration.</p>
+        <div className="mt-6 relative w-full max-w-4xl mx-auto select-none">
+          <div className="relative overflow-hidden rounded-2xl border shadow">
+            <Image src="/cyclope/avant.jpg" alt="Avant" width={1600} height={900} className="w-full h-auto block" />
+            <div className="absolute inset-0 overflow-hidden" style={{ width: `${pos}%` }}>
+              <Image src="/cyclope/apres.jpg" alt="Après" width={1600} height={900} className="w-full h-auto block" />
+            </div>
+            <div className="absolute inset-y-0" style={{ left: `${pos}%` }}>
+              <div className="w-0.5 h-full bg.black/60" />
+            </div>
+          </div>
+          <input
+            aria-label="Comparateur avant/après"
+            type="range"
+            min={0}
+            max={100}
+            value={pos}
+            onChange={(e) => setPos(parseInt(e.target.value))}
+            className="mt-3 w-full"
+          />
+          <div className="mt-2 flex justify-between text-sm text-gray-600">
+            <span>Avant</span>
+            <span>Après</span>
+          </div>
+        </div>
+      </Container>
+    </section>
+  );
+}
+
 function SectionExampleFalaise() {
   return (
     <section className="py-14 bg-white text-gray-900">
       <Container>
         <H2>Exemple de mission · Cartographie de falaise</H2>
-        <p className="mt-3 text-gray-700">Photogrammétrie UHD, accessibilité élargie, modèle 3D et spatialisation des mesures. Gains : détection globale, réduction des risques humains, démarches allégées.</p>
+        <p className="mt-3 text-gray-700">Photogrammétrie UHD, accessibilité élargie, modèle 3D et spatialisation des mesures.</p>
       </Container>
     </section>
   );
@@ -203,7 +239,7 @@ function SectionTopoGrandeEchelle() {
     <section className="py-14 bg-white text-gray-900">
       <Container>
         <H2>Topographie grande échelle</H2>
-        <p className="mt-3 text-gray-700">RTK au centimètre, intégration SIG directe, lisibilité optimale des courbes de niveau. Rapidité et précision pour grands périmètres.</p>
+        <p className="mt-3 text-gray-700">RTK au centimètre, intégration SIG directe, lisibilité optimale des courbes de niveau.</p>
         <div className="mt-4 relative h-56 rounded-2xl overflow-hidden border">
           <Image src="/cyclope/topo.jpg" alt="Topographie" fill className="object-cover" />
         </div>
@@ -212,37 +248,12 @@ function SectionTopoGrandeEchelle() {
   );
 }
 
-/** RETOUR FOND NOIR **/
 function SectionIngenieurEcologue() {
   return (
     <section className="py-14">
       <Container>
         <H2>La mission ingénieur écologue</H2>
-        <p className="mt-3 text-white/80">Correction et analyse réglementaire des études d'impact, participation aux concertations, rédaction et optimisation des rapports (DIAG, VNEI, CNPN, EVI...).</p>
-      </Container>
-    </section>
-  );
-}
-
-function SectionAutresPrestations() {
-  const blocks = [
-    { n: "1", title: "Prises de vue spécifiques", text: "Missions adaptées aux besoins du projet, faisabilité rapide, protocole validé et conformité réglementaire." },
-    { n: "2", title: "Correction / rédaction de rapports", text: "Analyse réglementaire, synthèses fonctionnelles, rédaction optimisée (DIAG, VNEI, CNPN, EVI…)." },
-    { n: "3", title: "Montages vidéos", text: "Suivi et valorisation des mesures ERC, présentations de projets, d'équipes et d'entreprises." },
-  ];
-  return (
-    <section className="py-14">
-      <Container>
-        <H2>Autres prestations</H2>
-        <div className="mt-6 grid md:grid-cols-3 gap-4">
-          {blocks.map((b, i) => (
-            <div key={i} className="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-sm">
-              <span className="inline-flex w-8 h-8 items-center justify-center rounded-full bg-white text-black text-sm">{b.n}</span>
-              <h3 className="mt-3 text-lg font-semibold">{b.title}</h3>
-              <p className="mt-2 text-sm text-white/80">{b.text}</p>
-            </div>
-          ))}
-        </div>
+        <p className="mt-3 text-white/80">Correction et analyse réglementaire des études d'impact, participation aux concertations, rédaction et optimisation des rapports.</p>
       </Container>
     </section>
   );
@@ -250,113 +261,4 @@ function SectionAutresPrestations() {
 
 function SectionZonesActivite() {
   return (
-    <section id="zones" className="py-14">
-      <Container>
-        <H2>Zone d'activité</H2>
-        <p className="mt-3 text-white/80">Zone principale 13·84 incluse dans les forfaits. Zone étendue France entière sur devis.</p>
-        <div className="mt-6 relative h-64 rounded-2xl overflow-hidden border border-white/10 bg-white/5">
-          <Image src="/cyclope/france-zones.png" alt="France zones" fill className="object-contain" />
-        </div>
-      </Container>
-    </section>
-  );
-}
-
-function SectionPourquoiCyclope() {
-  return (
-    <section id="pourquoi" className="py-14">
-      <Container>
-        <H2>Pourquoi CYCLOPE</H2>
-        <p className="mt-3 text-white/80">Méthodologie optimisée pour le bureau d'étude : interface drone ↔ besoins projet, gains de temps et de qualité, communication facilitée à chaque étape.</p>
-      </Container>
-    </section>
-  );
-}
-
-function SectionExperiences() {
-  const logos = [
-    { src: "/cyclope/logo-naturalia.png", name: "Naturalia Environnement" },
-    { src: "/cyclope/logo-dept13.png", name: "Département 13" },
-    { src: "/cyclope/logo-dept84.png", name: "Département 84" },
-    { src: "/cyclope/logo-dept05.png", name: "Département 05" },
-  ];
-  return (
-    <section className="py-14">
-      <Container>
-        <H2>Nos expériences</H2>
-        <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-6 place-items-center opacity-90">
-          {logos.map((l, i) => (
-            <Image key={i} src={l.src} alt={l.name} width={160} height={80} className="object-contain" />
-          ))}
-        </div>
-      </Container>
-    </section>
-  );
-}
-
-function SectionRAndD() {
-  return (
-    <section className="py-14">
-      <Container>
-        <H2>En développement R&D</H2>
-        <div className="mt-3 grid md:grid-cols-2 gap-6">
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <h3 className="text-lg font-semibold">Détection automatisée d'espèces (colorimétrie)</h3>
-            <p className="mt-2 text-sm text-white/80">Méthode par classes de couleurs pour repérer des espèces végétales. Ciblage précis, opérationnel, export SIG.</p>
-          </div>
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <h3 className="text-lg font-semibold">Détection automatisée d'espèces (pixélisation)</h3>
-            <p className="mt-2 text-sm text-white/80">Approche par segmentation/pixels pour cartographier la présence sur de grandes surfaces. Intégration au workflow.</p>
-          </div>
-        </div>
-      </Container>
-    </section>
-  );
-}
-
-function SectionContact() {
-  return (
-    <section id="contact" className="py-14 bg-white text-gray-900">
-      <Container>
-        <div className="grid md:grid-cols-2 gap-8 items-start">
-          <div>
-            <H2>Contact</H2>
-            <ul className="mt-4 space-y-2 text-sm">
-              <li className="flex items-center gap-2"><PhoneCall className="h-4 w-4" /> (+33) 06 65 54 11 07</li>
-              <li className="flex items-center gap-2"><Mail className="h-4 w-4" /> cyclope.entreprise@gmail.com</li>
-              <li className="flex items-center gap-2"><MapPin className="h-4 w-4" /> 3 Rue de Belle Aureille — 05000 GAP</li>
-              <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4" /> DGAC — Pilote drone pro</li>
-            </ul>
-          </div>
-          <form action="https://formsubmit.co/cyclope.entreprise@gmail.com" method="POST" className="bg-gray-50 text-gray-900 p-6 rounded-2xl border shadow-sm">
-            <input type="hidden" name="_captcha" value="false" />
-            <input type="hidden" name="_next" value="/merci" />
-            <div className="grid grid-cols-1 gap-4">
-              <input name="nom" placeholder="Nom / Société" required className="w-full rounded-xl border px-3 py-2" />
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <input type="email" name="email" placeholder="Email" required className="w-full rounded-xl border px-3 py-2" />
-                <input type="tel" name="telephone" placeholder="Téléphone" className="w-full rounded-xl border px-3 py-2" />
-              </div>
-              <textarea name="message" placeholder="Votre besoin (thermique, orthophoto, inspection, topographie…)" className="min-h-[120px] w-full rounded-xl border px-3 py-2" />
-              <button type="submit" className="w-full inline-flex justify-center items-center bg-black text-white rounded-xl px-4 py-3">Envoyer</button>
-            </div>
-          </form>
-        </div>
-      </Container>
-    </section>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="py-10 border-t border-white/10 bg-black">
-      <Container className="flex flex-col md:flex-row items-center justify-between gap-4">
-        <p className="text-sm text-white/60">© {new Date().getFullYear()} CYCLOPE — Tous droits réservés.</p>
-        <div className="flex items-center gap-4 text-sm">
-          <Link href="#">Mentions légales</Link>
-          <Link href="#">Confidentialité</Link>
-        </div>
-      </Container>
-    </footer>
-  );
-}
+    <section id="zones" className="py-14 bg-white text-gray-9
